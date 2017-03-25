@@ -11,7 +11,16 @@ public class CommandLineArgs {
 	private Map<String, String> named;
 	private List<String> rawList;
 	
+	private List<String> used;
+	
+	public String[] getUsed(){
+		return used.toArray(new String[0]);
+	}
+	
 	public Argument getNamed(String name){
+		if(!used.contains(name)){
+			used.add(name);
+		}
 		return new Argument(names.contains(name), named.get(name));
 	}
 	public Argument getUnnamed(int index){
@@ -26,6 +35,7 @@ public class CommandLineArgs {
 		names = new ArrayList<String>();
 		named = new HashMap<String, String>();
 		rawList = new ArrayList<String>();
+		used = new ArrayList<String>();
 		
 		String name = null;
 		
