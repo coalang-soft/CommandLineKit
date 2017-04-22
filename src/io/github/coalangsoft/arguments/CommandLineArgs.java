@@ -1,6 +1,7 @@
 package io.github.coalangsoft.arguments;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,10 @@ public class CommandLineArgs {
 	}
 	
 	public CommandLineArgs(String[] raw){
+		this(raw,new ArrayList<String>());
+	}
+	
+	public CommandLineArgs(String[] raw, Collection<String> nameOnly){
 		names = new ArrayList<String>();
 		named = new HashMap<String, String>();
 		rawList = new ArrayList<String>();
@@ -41,7 +46,10 @@ public class CommandLineArgs {
 		
 		for(int i = 0; i < raw.length; i++){
 			String arg = raw[i];
-			if(arg.startsWith("-")){
+			if(nameOnly.contains(arg)){
+				named.put(arg,null);
+				names.add(arg);
+			}else if(arg.startsWith("-")){
 				if(name != null){
 					names.add(name);
 				}
